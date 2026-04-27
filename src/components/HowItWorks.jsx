@@ -1,124 +1,135 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import mockupIphone from '../assets/mockupIphone.png';
 
 const steps = [
   {
-    title: "Créez votre compte",
-    description: "Inscrivez-vous en quelques clics et configurez votre profil d'entreprise pour commencer à expédier sans attendre. Une interface simple pour une prise en main immédiate.",
+    step: "ÉTAPE 01",
+    title: "Publie ta demande",
+    description: "Décris ta marchandise, indique d'où elle part et où elle doit arriver. Ça prend moins d'une minute.",
   },
   {
-    title: "Planifiez vos envois",
-    description: "Renseignez les détails de vos marchandises. Notre algorithme vous connecte instantanément avec les transporteurs les plus fiables et les mieux adaptés à vos besoins.",
+    step: "ÉTAPE 02",
+    title: "Choisis ton transporteur",
+    description: "Reçois des offres de transporteurs vérifiés près de toi. Compare les prix et choisis celui qui te convient.",
   },
   {
-    title: "Suivez en temps réel",
-    description: "Gardez un œil sur votre cargaison 24h/24 grâce à notre système de géolocalisation. Recevez des notifications automatiques et gérez vos documents en un seul endroit.",
+    step: "ÉTAPE 03",
+    title: "Suis ta livraison",
+    description: "Ton transporteur prend la route. Tu suis ta marchandise en temps réel jusqu'à destination.",
   }
 ];
 
 const HowItWorks = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const sectionRef = useRef(null);
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      
-      const start = rect.top - (viewportHeight * 0.8);
-      const height = rect.height;
-      
-      const progress = Math.max(0, Math.min(100, (-start / (height * 0.7)) * 100));
-      setScrollProgress(progress);
-    };
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // All useTransform calls MUST be at the top level — not inside JSX
+  const opacityStep1 = useTransform(smoothProgress, [0, 0.3], [1, 0]);
+  const opacityStep2 = useTransform(smoothProgress, [0.33, 0.45, 0.65], [0, 1, 0]);
+  const opacityStep3 = useTransform(smoothProgress, [0.66, 0.8], [0, 1]);
 
   return (
-    <section ref={sectionRef} className="bg-white overflow-hidden py-8 sm:py-16 border-t border-slate-100 relative">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 relative">
+    <section id="comment-ca-marche" ref={containerRef} className="relative bg-white pt-20 pb-0">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 flex flex-col lg:flex-row relative">
         
-        {/* Intro Phrase (Aligned Left) */}
-        <div className="mb-12 sm:mb-16 flex flex-col items-start text-left">
-          <div className="inline-block px-3 py-1 rounded-full bg-brand-primary/10 border border-brand-primary/20 text-brand-dark/80 font-bold text-[10px] uppercase tracking-widest w-max mb-4">
-             Logistique simplifiée
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-display font-bold text-brand-dark mb-2">
-            iFret, on y va ?
-          </h2>
-          <p className="text-lg sm:text-xl font-display font-medium text-slate-500 max-w-xl leading-relaxed">
-            Chez <span className="text-brand-dark font-bold underline decoration-brand-primary decoration-4 underline-offset-4 font-black">iFret</span>, optimiser vos flux se fait naturellement, étape par étape.
-          </p>
-        </div>
-
-        {/* Unified Vertical Progress Line (Desktop Only) */}
-        <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-[280px] bottom-20 w-[2px] bg-slate-100 z-0">
-          <div 
-            className="absolute top-0 left-0 w-full bg-brand-primary transition-all duration-300 ease-out origin-top"
-            style={{ height: `${scrollProgress}%` }}
-          ></div>
-        </div>
-
-        <div className="flex flex-col gap-12 sm:gap-16 relative z-10">
-          {steps.map((step, index) => {
-            const stepThreshold = (index / (steps.length - 1)) * 80;
-            const isStepActive = scrollProgress > stepThreshold;
-
-            return (
-              <div 
-                key={index} 
-                className={`flex flex-col md:flex-row items-center gap-10 sm:gap-20 ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''} transition-all duration-700 ${isStepActive ? 'opacity-100 translate-y-0' : 'opacity-40 translate-y-10'}`}
-              >
-                {/* Image Column */}
-                <div className="w-full md:w-1/2">
-                  <div className={`aspect-[16/10] bg-slate-100 rounded-[2rem] flex items-center justify-center border transition-all duration-500 overflow-hidden relative group ${isStepActive ? 'border-brand-primary/30 shadow-lg' : 'border-slate-200'}`}>
-                     {/* Decorative background element for placeholder */}
-                     <div className={`absolute -bottom-10 -right-10 w-40 h-40 bg-brand-primary/10 rounded-full transition-transform duration-1000 ${isStepActive ? 'scale-150' : 'scale-100'}`}></div>
-                     
-                     <div className={`flex flex-col items-center gap-4 relative z-10 transition-all duration-500 ${isStepActive ? 'text-brand-primary' : 'text-slate-400'}`}>
-                        <svg 
-                            xmlns="http://www.w3.org/2000/svg" 
-                            width="48" 
-                            height="48" 
-                            viewBox="0 0 24 24" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            strokeWidth="1.2" 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round"
-                        >
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                        </svg>
-                        <span className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-60">Visuel Etape #{index + 1}</span>
-                     </div>
-                  </div>
-                </div>
-
-                {/* Vertical separator spacing holder */}
-                <div className="hidden md:block w-px h-px invisible"></div>
-
-                {/* Text Column */}
-                <div className="w-full md:w-1/2">
-                  <div className={`max-w-md ${index % 2 !== 0 ? 'mr-auto' : 'ml-auto'}`}>
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className={`font-display font-black text-6xl transition-colors duration-500 select-none ${isStepActive ? 'text-brand-primary opacity-20' : 'text-slate-300 opacity-10'}`}>
-                        0{index + 1}
-                      </div>
-                    </div>
-                    <h3 className={`text-2xl sm:text-3xl font-display font-bold mb-4 leading-tight transition-colors duration-500 ${isStepActive ? 'text-brand-dark' : 'text-slate-400'}`}>
-                      {step.title}
-                    </h3>
-                    <p className={`text-lg leading-relaxed transition-colors duration-500 ${isStepActive ? 'text-slate-600' : 'text-slate-400'}`}>
-                      {step.description}
-                    </p>
-                  </div>
-                </div>
+        {/* Left Side: Scrolling Text Content */}
+        <div className="w-full lg:w-1/2 flex flex-col lg:pl-12">
+          {steps.map((item, index) => (
+            <div 
+              key={index} 
+              className="min-h-[60vh] lg:h-screen flex flex-col justify-center py-12 lg:py-20"
+            >
+              <div className="max-w-xl">
+                <span className="text-brand-primary font-semibold text-sm uppercase tracking-[0.2em] block mb-4">
+                  {item.step}
+                </span>
+                <h3 className="text-3xl lg:text-5xl font-display font-semibold text-brand-dark mb-8 leading-tight">
+                  {item.title}
+                </h3>
+                <p className="text-slate-500 text-lg lg:text-xl leading-relaxed">
+                  {item.description}
+                </p>
               </div>
-            );
-          })}
+            </div>
+          ))}
+          {/* Spacer */}
+          <div className="h-[20vh]" />
+        </div>
+
+        {/* Right Side: Sticky Mockup in Container */}
+        <div className="hidden lg:block w-1/2 sticky top-0 h-screen overflow-hidden">
+          <div className="relative w-full h-full flex items-center justify-center p-12">
+            <div className="relative w-full h-full max-h-[750px] bg-[#F1F1F1] rounded-[3rem] flex items-center justify-center overflow-hidden border border-slate-100 shadow-sm">
+                <div className="absolute inset-0 opacity-[0.2]" style={{ 
+                    backgroundImage: 'radial-gradient(#000 1.2px, transparent 1.2px)', 
+                    backgroundSize: '30px 30px' 
+                }}></div>
+
+                <motion.div className="relative w-full max-w-[340px] z-10 translate-y-24">
+                    <img 
+                        src={mockupIphone} 
+                        alt="Ifret App" 
+                        className="w-full h-auto object-contain drop-shadow-2xl scale-110"
+                    />
+
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none p-10">
+                        <div className="w-[85%] h-[85%] bg-white rounded-[2.5rem] mt-4 overflow-hidden relative border border-slate-100">
+                             {/* Step 1 Content */}
+                             <motion.div 
+                                className="absolute inset-0 p-6 flex flex-col gap-4"
+                                style={{ opacity: opacityStep1 }}
+                             >
+                                <div className="h-8 w-1/2 bg-slate-50 rounded-lg"></div>
+                                <div className="h-32 w-full bg-slate-50 rounded-2xl"></div>
+                                <div className="space-y-2">
+                                    <div className="h-4 w-full bg-slate-50 rounded-full"></div>
+                                    <div className="h-4 w-3/4 bg-slate-50 rounded-full"></div>
+                                </div>
+                             </motion.div>
+
+                             {/* Step 2 Content */}
+                             <motion.div 
+                                className="absolute inset-0 p-6 flex flex-col gap-4 bg-white"
+                                style={{ opacity: opacityStep2 }}
+                             >
+                                <div className="h-8 w-1/2 bg-brand-primary/10 rounded-lg"></div>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div className="h-24 bg-slate-50 rounded-xl"></div>
+                                    <div className="h-24 bg-slate-50 rounded-xl"></div>
+                                </div>
+                                <div className="h-32 w-full bg-slate-50 rounded-2xl"></div>
+                             </motion.div>
+
+                             {/* Step 3 Content */}
+                             <motion.div 
+                                className="absolute inset-0 p-6 flex flex-col gap-4 bg-white"
+                                style={{ opacity: opacityStep3 }}
+                             >
+                                <div className="h-8 w-1/2 bg-green-50 rounded-lg"></div>
+                                <div className="flex-1 w-full bg-slate-50 rounded-2xl relative overflow-hidden">
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-brand-primary rounded-full animate-ping"></div>
+                                </div>
+                             </motion.div>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Mockup */}
+        <div className="lg:hidden w-full flex justify-center pb-20">
+            <img src={mockupIphone} alt="App" className="w-2/3 h-auto drop-shadow-2xl" />
         </div>
       </div>
     </section>

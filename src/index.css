@@ -1,8 +1,9 @@
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@200,300,400,500,600,700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-display: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "General Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-display: "General Sans", ui-sans-serif, system-ui, sans-serif;
 
   --color-brand-primary: #FFC000;
   --color-brand-dark: #1A1500; /* Deep black derived from yellow */
@@ -56,25 +57,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Premium Liquid Fill Button */
 .btn-premium {
-  @apply relative overflow-hidden bg-brand-dark text-white font-semibold px-5 py-2 rounded-full transition-all duration-500 ease-in-out inline-flex items-center z-10 border border-transparent;
-}
-
-.btn-premium .fill-circle {
-  @apply absolute bg-brand-primary rounded-full transition-all duration-700 ease-out -z-10;
-  width: 0;
-  height: 0;
-  bottom: 0;
-  left: 0;
-  transform: translate(-50%, 50%);
+  @apply relative overflow-hidden bg-brand-dark text-white font-semibold px-7 py-2.5 rounded-full transition-all duration-500 ease-in-out inline-flex items-center z-10 border-2 border-transparent;
 }
 
 .btn-premium:hover {
-  @apply text-brand-dark shadow-lg shadow-brand-primary/20 border-brand-dark;
-}
-
-.btn-premium:hover .fill-circle {
-  width: 600px;
-  height: 600px;
+  @apply bg-brand-primary text-brand-dark shadow-lg shadow-brand-primary/30 border-brand-primary;
 }
 
 .btn-premium svg {
@@ -83,4 +70,37 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn-premium:hover svg {
   @apply transform translate-y-0.5;
+}
+
+/* Bubble Tail Effect */
+.bubble-card {
+  position: relative;
+}
+
+.bubble-card::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 20px;
+  width: 16px;
+  height: 16px;
+  background: inherit;
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  transform: rotate(0deg);
+}
+
+.bubble-card-tr {
+  position: relative;
+}
+
+.bubble-card-tr::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  width: 16px;
+  height: 16px;
+  background: inherit;
+  clip-path: polygon(100% 100%, 0 100%, 100% 0);
+  transform: rotate(0deg);
 }

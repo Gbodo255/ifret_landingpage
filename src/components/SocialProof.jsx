@@ -22,9 +22,9 @@ const SocialProof = () => {
   const repeatedLogos = [...logos, ...logos, ...logos];
 
   return (
-    <section className="py-8 bg-slate-50/50 border-y border-slate-100 overflow-hidden">
+    <section className="relative z-20 -mt-12 sm:-mt-44 py-4 sm:py-8 bg-white border-y border-slate-100 overflow-hidden shadow-[0_-20px_50px_-10px_rgba(0,0,0,0.05)]">
       <div className="max-w-7xl mx-auto px-6 mb-4">
-        <p className="text-center text-sm font-bold text-slate-900 uppercase tracking-wider">
+        <p className="text-center text-sm font-semibold text-slate-400 uppercase tracking-wider">
           Ils nous font confiance :
         </p>
       </div>
@@ -39,7 +39,7 @@ const SocialProof = () => {
                 key={`logo-1-${index}`} 
                 src={logo.src} 
                 alt={logo.alt} 
-                className="h-14 w-auto object-contain transition-all duration-300 hover:scale-110"
+                className="h-10 w-auto object-contain transition-all duration-300 hover:scale-110 grayscale opacity-40 hover:grayscale-0 hover:opacity-100"
               />
             ))}
           </div>
@@ -50,7 +50,7 @@ const SocialProof = () => {
                 key={`logo-2-${index}`} 
                 src={logo.src} 
                 alt={logo.alt} 
-                className="h-14 w-auto object-contain transition-all duration-300 hover:scale-110"
+                className="h-10 w-auto object-contain transition-all duration-300 hover:scale-110 grayscale opacity-40 hover:grayscale-0 hover:opacity-100"
               />
             ))}
           </div>

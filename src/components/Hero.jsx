@@ -1,77 +1,124 @@
 import React from 'react';
-import googlePlayLogo from '../assets/icons8-google-play-store-96.png';
-import heroShape from '../assets/hero-shape.png';
-import heroPhones from '../assets/hero-phones.png';
+import { motion } from 'framer-motion';
+import { ArrowRight, Play } from 'lucide-react';
+import LogoFanMilk from '../assets/Logo (1)/Fan Milk.png';
+import LogoSobaps from '../assets/Logo (1)/SOBAPS 1.png';
+import LogoCroixRouge from '../assets/Logo (1)/Croix rouge 2.png';
+import mockupIphone from '../assets/mockupIphone.png';
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-6 sm:px-10 pt-20 pb-20 overflow-hidden">
-      {/* Hero Top Wave (Solid Yellow, Flipped) */}
-      <div 
-        className="absolute top-0 left-0 w-full h-[120px] sm:h-[180px] pointer-events-none z-0"
-        style={{
-          maskImage: `url(${heroShape})`,
-          maskSize: '100% 100%',
-          maskPosition: 'top',
-          maskRepeat: 'no-repeat',
-          WebkitMaskImage: `url(${heroShape})`,
-          WebkitMaskSize: '100% 100%',
-          WebkitMaskPosition: 'top',
-          WebkitMaskRepeat: 'no-repeat',
-          backgroundColor: '#FFC000',
-          transform: 'scaleY(-1)', // Flip upside down
+    <section id="accueil" className="relative min-h-screen flex flex-col items-center justify-center p-6 lg:p-10 bg-white overflow-hidden pt-24 lg:pt-32">
+      {/* Decorative background elements */}
+      <div className="absolute top-0 right-0 -z-10 w-1/3 h-full bg-gradient-to-l from-brand-primary/5 to-transparent"></div>
+      <motion.div 
+        animate={{ 
+          y: [0, -20, 0],
+          rotate: [0, 5, 0]
         }}
+        transition={{ 
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute top-1/4 -left-20 -z-10 w-64 h-64 bg-brand-primary/10 rounded-full blur-3xl"
       />
 
-      <div className="max-w-7xl mx-auto flex flex-col items-center text-center w-full relative z-20 -mt-20">
-        {/* Proposition de valeur */}
-        <div className="max-w-4xl mb-12">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-brand-dark leading-tight mb-3 animate-fade-in-up">
-            Optimisez vos expéditions avec intelligence
+      <div className="max-w-5xl mx-auto w-full flex flex-col items-center justify-center text-center">
+        {/* Value Proposition */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex flex-col items-center gap-6"
+        >
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-brand-dark leading-[1.25]">
+            Expédiez où vous voulez, quand vous <br className="hidden sm:block" />
+            voulez en toute <span className="text-brand-primary">confiance.</span>
           </h1>
-          <p className="text-base sm:text-lg text-slate-600 mb-5 animate-fade-in-up [animation-delay:200ms]">
-            La plateforme qui simplifie votre logistique, réduit vos coûts et suit vos expéditions en temps réel.
+          
+          <p className="text-base sm:text-lg lg:text-xl text-slate-500 max-w-2xl leading-relaxed mt-2">
+            Gérez vos expéditions, optimisez vos coûts et suivez vos marchandises en temps réel avec la plateforme logistique la plus intuitive du marché.
           </p>
           
-          <div className="flex flex-wrap items-center justify-center gap-4 animate-fade-in-up [animation-delay:400ms]">
-            {/* App Store Button */}
-            <button className="flex items-center gap-2.5 bg-brand-dark px-4 py-1.5 rounded-lg shadow-sm hover:bg-black transition-colors active:scale-95">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-7 h-7 text-white">
-                    <path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
-                </svg>
-                <div className="flex flex-col items-start leading-none mt-1">
-                    <span className="text-[10px] text-slate-300 font-semibold mb-0.5">Disponible sur</span>
-                    <span className="text-sm font-bold text-white tracking-tight">App Store</span>
+          <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
+            <a 
+              href="https://play.google.com/store/apps/details?id=com.ilt.ifret_mobile&hl=fr" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="h-14 w-full sm:w-auto bg-brand-dark text-white px-10 rounded-full text-base font-bold hover:bg-brand-primary hover:text-brand-dark hover:border-brand-primary border-2 border-transparent transition-all shadow-2xl shadow-brand-dark/20 flex items-center justify-center gap-3 group overflow-hidden"
+            >
+              <span>Télécharger l'app</span>
+              <div className="relative w-5 h-5 overflow-hidden">
+                <div className="flex flex-row transition-transform duration-500 ease-in-out group-hover:-translate-x-5">
+                  <ArrowRight className="w-5 h-5 shrink-0" />
+                  <ArrowRight className="w-5 h-5 shrink-0" />
                 </div>
-            </button>
-
-            {/* Google Play Button */}
-            <button className="flex items-center gap-2.5 bg-brand-dark px-4 py-1.5 rounded-lg shadow-sm hover:bg-black transition-colors active:scale-95">
-                <img src={googlePlayLogo} alt="Google Play" className="w-7 h-7 object-contain" />
-                <div className="flex flex-col items-start leading-none mt-1">
-                    <span className="text-[10px] text-slate-300 font-semibold mb-0.5">Disponible sur</span>
-                    <span className="text-sm font-bold text-white tracking-tight">Google Play</span>
-                </div>
-            </button>
+              </div>
+            </a>
+            
+            <motion.button 
+              whileHover="hover"
+              whileTap={{ scale: 0.96 }}
+              className="h-14 w-full sm:w-auto flex items-center gap-4 group px-8 bg-slate-50 border border-slate-100 rounded-full hover:border-brand-primary/30 hover:bg-white transition-all shadow-sm justify-center"
+            >
+              <div className="relative w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-100 group-hover:bg-brand-primary group-hover:border-brand-primary group-hover:text-white transition-all duration-300 overflow-hidden">
+                <motion.span 
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileTap={{ scale: 4, opacity: 0.3 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0 bg-brand-dark rounded-full pointer-events-none"
+                />
+                <motion.div
+                  variants={{
+                    hover: { 
+                      rotate: 360,
+                      scale: [1, 1.2, 1],
+                      transition: { 
+                        rotate: { duration: 1.5, ease: "easeInOut" },
+                        scale: { repeat: Infinity, duration: 1.5 }
+                      }
+                    }
+                  }}
+                  className="relative z-10 flex items-center justify-center"
+                >
+                  <Play className="w-4 h-4 fill-current ml-1" />
+                </motion.div>
+              </div>
+              <span className="text-base font-bold text-brand-dark">Voir comment ça marche</span>
+            </motion.button>
           </div>
-        </div>
-      </div>
 
-      {/* Decorative Concentric Circles (Lowered even more with gradient visibility) */}
-      <div className="absolute bottom-[-650px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] sm:w-[950px] sm:h-[950px] pointer-events-none z-0 flex items-center justify-center">
-        <div className="absolute w-full h-full border-2 border-brand-primary/10 rounded-full animate-[pulse_8s_infinite]"></div>
-        <div className="absolute w-[80%] h-[80%] border-2 border-brand-primary/20 rounded-full animate-[pulse_10s_infinite]"></div>
-        <div className="absolute w-[60%] h-[60%] border-2 border-brand-primary/40 rounded-full animate-[pulse_12s_infinite]"></div>
-        <div className="absolute w-[40%] h-[40%] border-2 border-brand-primary/60 rounded-full animate-[pulse_14s_infinite]"></div>
-      </div>
+          {/* iPhone Mockup Row */}
+          <div className="mt-16 flex flex-row items-center justify-center -space-x-12 sm:-space-x-32 lg:-space-x-44 w-full max-w-6xl mx-auto overflow-visible">
+            {/* Left Mockup */}
+            <div className="w-[120px] sm:w-[280px] lg:w-[340px] shrink-0 opacity-90 translate-y-2">
+              <img 
+                src={mockupIphone} 
+                alt="Ifret Mobile App 1" 
+                className="w-full h-auto object-contain drop-shadow-xl"
+              />
+            </div>
 
-      {/* Phone Mockups */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 z-10 animate-fade-in-up [animation-delay:600ms]">
-        <img 
-          src={heroPhones} 
-          alt="I-fret mobile mockups" 
-          className="w-full h-auto object-contain drop-shadow-2xl scale-105 sm:scale-110 translate-y-6 sm:translate-y-12 relative z-10" 
-        />
+            {/* Center Mockup */}
+            <div className="w-[140px] sm:w-[320px] lg:w-[400px] shrink-0 z-10">
+              <img 
+                src={mockupIphone} 
+                alt="Ifret Mobile App 2" 
+                className="w-full h-auto object-contain drop-shadow-2xl"
+              />
+            </div>
+
+            {/* Right Mockup */}
+            <div className="w-[120px] sm:w-[280px] lg:w-[340px] shrink-0 opacity-90 translate-y-2">
+              <img 
+                src={mockupIphone} 
+                alt="Ifret Mobile App 3" 
+                className="w-full h-auto object-contain drop-shadow-xl"
+              />
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
